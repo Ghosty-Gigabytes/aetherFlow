@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1060" viewBox="0 0 1400 1060">
+<style>text{font-family:Arial,sans-serif;fill:#e9eef8} .title{font-size:30px;font-weight:bold}.head{font-size:21px;font-weight:bold}.body{font-size:18px}.small{font-size:16px;fill:#bdc9dc}.box{fill:#172337;stroke:#3a526e;stroke-width:2}.wire{fill:none;stroke:#60c8dd;stroke-width:3}.power{fill:none;stroke:#ffb65c;stroke-width:3}</style>
+<rect width="1400" height="1060" fill="#0b1423"/>
+<text x="45" y="52" class="title">Perfume dispenser · Wiring map</text>
+<text x="45" y="82" class="small">Classic 5 V ATmega328P Nano · Logical connections, not physical pin positions</text>
+<rect x="490" y="130" width="420" height="440" rx="18" class="box"/>
+<text x="520" y="169" class="head">ARDUINO NANO</text>
+<text x="520" y="210" class="body">A4 → OLED SDA</text><text x="520" y="244" class="body">A5 → OLED SCL / SCK*</text>
+<text x="520" y="278" class="body">D3 → Encoder CLK / A</text><text x="520" y="312" class="body">D4 → Encoder DT / B</text>
+<text x="520" y="346" class="body">D5 → Encoder SW</text><text x="520" y="380" class="body">D6 → Trigger NO</text>
+<text x="520" y="414" class="body">D2 ← Flow sensor signal</text><text x="520" y="448" class="body">D9 → Pump MOSFET gate via 220 Ω</text>
+<text x="520" y="482" class="body">A0 ← Battery divider midpoint</text><text x="520" y="516" class="body">5V ← Regulated +5 V · GND ← 0 V</text>
+<text x="520" y="548" class="small">D0 / D1: leave free for USB serial</text>
+<rect x="45" y="130" width="385" height="135" rx="14" class="box"/>
+<text x="65" y="164" class="head">128×64 I²C OLED</text><text x="65" y="198" class="body">SDA → A4 · SCL → A5 · GND → GND</text>
+<text x="65" y="231" class="small">VCC → module-rated supply; verify 5 V logic</text>
+<path d="M430 198H490" class="wire"/>
+<rect x="45" y="290" width="385" height="135" rx="14" class="box"/>
+<text x="65" y="324" class="head">ROTARY ENCODER</text><text x="65" y="358" class="body">CLK → D3 · DT → D4 · SW → D5</text>
+<text x="65" y="391" class="small">GND → GND · module VCC → rated supply</text>
+<path d="M430 358H490" class="wire"/>
+<rect x="45" y="450" width="385" height="120" rx="14" class="box"/>
+<text x="65" y="484" class="head">TRIGGER MICROSWITCH</text><text x="65" y="518" class="body">NO → D6 · COM → GND</text><text x="65" y="548" class="small">NC unused · internal pull-up enabled</text>
+<path d="M430 510H490" class="wire"/>
+<rect x="970" y="130" width="385" height="145" rx="14" class="box"/>
+<text x="990" y="164" class="head">YF-S401 FLOW SENSOR</text><text x="990" y="198" class="body">Signal → D2 · GND → GND</text>
+<text x="990" y="231" class="small">Supply → rated voltage; verify exact unit</text><text x="990" y="255" class="small">Verify wire colours and output pull-up needs</text>
+<path d="M910 210H970" class="wire"/>
+<rect x="970" y="300" width="385" height="270" rx="14" class="box"/>
+<text x="990" y="335" class="head">PUMP DRIVER · LOW SIDE</text><text x="990" y="370" class="body">D9 → 220 Ω → Gate</text>
+<text x="990" y="402" class="body">10 kΩ: Gate ↔ Source</text><text x="990" y="434" class="body">Source → GND · Drain → Pump −</text>
+<text x="990" y="466" class="body">Pump + → Buck +5 V</text><text x="990" y="500" class="small">Diode across pump: stripe → Pump +</text>
+<text x="990" y="526" class="small">Other diode end → Pump − / Drain</text><text x="990" y="552" class="small">Verify MOSFET pinout and diode current rating</text>
+<path d="M910 448H970" class="wire"/>
+<rect x="45" y="605" width="1310" height="165" rx="14" class="box"/>
+<text x="65" y="642" class="head">POWER · ASSUMING A 3S BATTERY PACK</text>
+<text x="65" y="682" class="body">3 × 18650 in series → correct 3S BMS → fuse → switch → buck converter → regulated 5 V rail</text>
+<text x="65" y="718" class="body">5 V rail → Nano 5V pin + pump positive + compatible modules · All grounds join at supply return</text>
+<text x="65" y="748" class="small">Use a proper 12.6 V CC/CV charger for a conventional 3S Li-ion pack. BMS wiring follows its own datasheet.</text>
+<rect x="45" y="800" width="640" height="160" rx="14" class="box"/>
+<text x="65" y="836" class="head">OPTIONAL BATTERY MEASUREMENT</text>
+<text x="65" y="874" class="body">Protected battery + → 33 kΩ → A0 → 10 kΩ → GND</text>
+<text x="65" y="908" class="small">Optional 100 nF capacitor: A0 → GND</text>
+<text x="65" y="938" class="small">Verify divider before enabling BATTERY_ENABLED.</text>
+<rect x="715" y="800" width="640" height="160" rx="14" class="box"/>
+<text x="735" y="836" class="head">BUILD NOTES</text>
+<text x="735" y="874" class="small">Pump current returns directly to supply, not through Nano.</text>
+<text x="735" y="904" class="small">470 µF near driver; 100 nF near Nano, across 5 V and GND.</text>
+<text x="735" y="934" class="small">Current sketch is a UI demo: pump output remains LOW.</text>
+<text x="45" y="1001" class="small">* SCK here applies only to a four-pin I²C OLED labelled GND / VCC / SCK / SDA; SPI displays need different wiring.</text>
+<text x="45" y="1030" class="small">Never connect pack voltage directly to 5V or A0. Use module labels; pin order varies. Verify IRLZ44N marking before wiring.</text>
+</svg>
